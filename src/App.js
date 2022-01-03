@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import db from './firebase-config'
 import firebase from 'firebase/compat/app';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { Button, Col, Form, Table } from 'react-bootstrap';
 
 const App = () => {
   const [userInfo, setuserInfo] = useState({
@@ -82,11 +84,24 @@ const App = () => {
       <div className="wrapper">
         {/* Insert users -------------------------------------------*/}
         {isOpen === false &&
+          
+
           <form onSubmit={addlist}>
-            <input type="text" id="title"  name="title" value={userInfo.title} onChange={onChangeValue} placeholder=" Title " required />
-            <textarea id="desc" name="description" value={userInfo.description} onChange={onChangeValue} placeholder=" Description "  />
-            <button type="submit" className="btn__default btn__add" > Add </button>  
+          <Col xs={10} >
+          <Form.Group className="mb-3 " controlId="formGroupEmail">
+            <Form.Label>Title</Form.Label>
+            <Form.Control type="text" id="title" name="title" value={userInfo.title} onChange={onChangeValue} placeholder=" Title " required />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formGroupEmail">
+            <Form.Label>Description</Form.Label>
+            <Form.Control type='textarea' id="desc" name="description" value={userInfo.description} onChange={onChangeValue} placeholder=" Description " />
+          </Form.Group></Col>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
           </form>
+
+
         } 
       </div>
       {/* Fetch users ------------------------------------------------*/}
@@ -96,17 +111,27 @@ const App = () => {
             <p><b> Title : </b> {items.title}</p>
             <p><b> Description : </b>{items.description}</p>
             <p><b> Date : </b>{items.datetime?.toDate().toLocaleDateString("en-US")}</p>  
+            
             <div className="update__list"> 
               <button onClick={()=>Update(items)}  className="btn__default btn__edit"> Edit </button>
               <button onClick={()=>Delete(items.id)}  className="btn__default btn__delete"> delete </button>
             </div>
             {/* Edit users ------------------------------------------- */}
             {isOpen === true && isEdit === items.id &&
+              
               <form onSubmit={editlist}>
-                <input type="text" id="title"  name="title" value={userInfo.title} onChange={onChangeValue} placeholder=" Title " required />
-                <textarea id="desc" name="description" value={userInfo.description} onChange={onChangeValue} placeholder=" Description "  />
-                <button type="submit" className="btn__default btn__add" > Save </button>  
-              </form>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control type="text" id="title" name="title" value={userInfo.title} onChange={onChangeValue} placeholder=" Title " required />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control type='textarea' id="desc" name="description" value={userInfo.description} onChange={onChangeValue} placeholder=" Description " />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Save
+                </Button>
+                </form>
             }           
           </div>    
         </div>
